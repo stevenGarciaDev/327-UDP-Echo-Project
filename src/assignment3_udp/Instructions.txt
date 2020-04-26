@@ -1,0 +1,30 @@
+Overview of UDP:
+
+How to execute program:
+
+Must have Java JDK installed on machine which can be downloaded for free from Oracle.
+Can verify through command prompt with commands.
+
+> java -version 
+> javac -version 
+
+The output versions should match.
+
+After you must compile the client and server files.
+
+> javac EchoClient.java 
+> javac EchoServer.java 
+
+Now find out your local IP address through the output of IPv4Address 
+and copy that IP address.
+
+Open two command prompts as to run both EchoClient and EchoServer.
+
+> java EchoServer <port>
+
+Then in the other command prompt.
+
+> java EchoClient 
+
+The user input for the EchoClient requires your local IP address that you copied,
+the port that you specified for your EchoServer, and a message to send. 
