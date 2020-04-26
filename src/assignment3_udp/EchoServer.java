@@ -13,14 +13,17 @@ public class EchoServer {
 
         try {
             serverPort = Integer.parseInt(args[0]);
-            aSocket = new DatagramSocket(serverPort);
+            InetAddress aHost = InetAddress.getLocalHost();
+            aSocket = new DatagramSocket(serverPort, aHost);
             System.out.println("UDP Echo Server created, port:" + serverPort);
 
             while (true) {
                 System.out.println("listening for datagram packets...");
                 byte[] buffer = new byte[1000];
                 request = new DatagramPacket(buffer, buffer.length);
+                System.out.println("about to receive packet");
                 aSocket.receive(request);
+                System.out.println("received packet");
 
                 // output to console 
                 System.out.println("Received message: " + new String(request.getData()));

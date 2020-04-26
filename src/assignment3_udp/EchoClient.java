@@ -21,9 +21,17 @@ public class EchoClient {
 			try {
 				System.out.print("Please enter the IP address: ");
 				aHost = InetAddress.getByName(scan.nextLine());
-				
+				InetAddress localhost = InetAddress.getLocalHost();
+
+				if (!aHost.equals(localhost)) {
+					throw new Exception("Does not match localhost. Please enter correct address.");
+				}
+
 				System.out.print("\n\nPlease enter the port number of the server: ");
 				serverPort = Integer.parseInt(scan.nextLine());
+				if (serverPort < 1) {
+					throw new Exception("Invalid port number");
+				}
 
 				System.out.print("\n\nPlease enter the message to be sent: ");
 				inputMessage = scan.nextLine();
@@ -41,7 +49,7 @@ public class EchoClient {
 				byte[] buffer = new byte[100];
 				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
 				aSocket.receive(reply);
-				System.out.println("Reply: " + new String(reply.getData()));
+				System.out.println("\nReply from the server: " + new String(reply.getData()));
 				
 				isInvalidInput = false;
 			
