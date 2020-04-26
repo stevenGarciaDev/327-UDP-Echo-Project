@@ -7,18 +7,19 @@ public class echoServerTest
         //assignment says to get port automatically, not hard coded
         //ip address seams to be auto, not sure about port?
 
-        int port = 8000;
+        
         // server creation
         DatagramSocket serverDGSocket = null;
         try
         {
+            int port = Integer.parseInt(args[0]);
             serverDGSocket = new DatagramSocket(port);
             System.out.println("UDP Echo Server created, port:" + port);
         }
         catch(IOException e)
         {
-            //server couldnt be created i believe
-            System.out.println(e);
+            //server couldnt be created
+            System.out.println("Error: server could not be created: " + e.getMessage());
             System.exit(1);
         }
         try
@@ -28,12 +29,18 @@ public class echoServerTest
             String message;
             while(true)
             {
-            // listen for datagram packets
-            serverDGSocket.receive(messagePacket);
-            message = new String(messagePacket.getData(), 0, messagePacket.getLength());
-            System.out.println("Received from server: "+message);
-            // send received packet back to the client
-            serverDGSocket.send(messagePacket);
+                System.out.println("listening for datagram packets...");
+                // listen for datagram packets
+                serverDGSocket.receive(messagePacket);
+                message = new String(messagePacket.getData(), 0, messagePacket.getLength());
+                System.out.println("Received from server: " + message);
+
+                // echo the data 
+                DatagramPacket response = new DatagramPacket(messagePacket.getData(), messagePacket.getLength(), messagePacket.getAddress(), messagePacket.getPort());
+
+                // send received packet back to the client
+                serverDGSocket.send(response);
+                System.out.println("listening for datagram packets...");
             }
         }
         catch(IOException e)
